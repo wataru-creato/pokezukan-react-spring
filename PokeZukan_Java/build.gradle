@@ -1,0 +1,31 @@
+plugins {
+    id 'java' // 1. Javaプロジェクトであることを明示する
+}
+
+group = 'org.example'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // Jacksonライブラリ
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.15.2'
+
+    testImplementation platform('org.junit:junit-bom:5.10.0')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+}
+
+// 2. すべてのJavaコンパイルおよび実行時にUTF-8を強制する正しい書き方
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+}
+
+tasks.withType(JavaExec).configureEach {
+    jvmArgs '-Dfile.encoding=UTF-8'
+}
+
+test {
+    useJUnitPlatform()
+}
